@@ -6,6 +6,7 @@ use z3_sys::*;
 use Context;
 use Model;
 use Optimize;
+use Params;
 use SatResult;
 use Statistics;
 use Symbol;
@@ -30,6 +31,11 @@ impl<'ctx> Optimize<'ctx> {
     /// Get this optimizers 's context.
     pub fn get_context(&self) -> &'ctx Context {
         self.ctx
+    }
+
+    /// Set parameters on the optimize context.
+    pub fn set_params(&self, params: &Params<'ctx>) {
+        unsafe { Z3_optimize_set_params(self.ctx.z3_ctx, self.z3_opt, params.z3_params) };
     }
 
     /// Assert hard constraint to the optimization context.
